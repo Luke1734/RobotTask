@@ -1,4 +1,5 @@
-from Direction import Direction
+from direction import Direction
+from log import Log
 
 class Robot:
 	__x: int = 0
@@ -18,7 +19,7 @@ class Robot:
 			#Parse inputs from format: PLACE X,Y,F
 			parameters = command[6:].split(",")
 			if len(parameters)!=3:
-				print("Not enough parameters, PLACE requires X,Y,F")
+				Log.d("Not enough parameters, PLACE requires X,Y,F")
 				return
 			x = int(parameters[0])
 			y = int(parameters[1])
@@ -26,7 +27,7 @@ class Robot:
    
    			#Sanitise inputs
 			if not Robot.__validatePosition(x, y):
-				print("Position Invalid - X and Y must both be in the range of 0 to 4 inclusive")
+				Log.d("Position Invalid - X and Y must both be in the range of 0 to 4 inclusive")
 				return
 			try:
 				direction = Direction[f]
@@ -36,11 +37,11 @@ class Robot:
 				self.__direction = direction
 				self.__isPlaced = True
 			except KeyError:
-				print("Direction Invalid - The direction must be one of NORTH,EAST,SOUTH,WEST")
+				Log.d("Direction Invalid - The direction must be one of NORTH,EAST,SOUTH,WEST")
 			return
    
 		if not self.__isPlaced:
-			print("Ignoring command - PLACE must be called first")
+			Log.d("Ignoring command - PLACE must be called first")
 			return
    
 		match(command):
@@ -53,7 +54,7 @@ class Robot:
 			case("REPORT"):
 				self.__report()
 			case("_"):
-				print("Invalid command")
+				Log.d("Invalid command")
 
 
 	def __move(self):
@@ -87,4 +88,6 @@ class Robot:
 		Private method to output the current x,y position and the direction
   		currently being faced.
   		'''
-		print(f"{self.__x}, {self.__y}, {self.__direction.name}")
+		output = f"{self.__x},{self.__y},{self.__direction.name}"
+		print(output)
+		return output

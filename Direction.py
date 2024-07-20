@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Self, Tuple
+from typing import Self
 
 class Direction(Enum):
 	NORTH = 0
